@@ -1,0 +1,36 @@
+{
+  "name": "hello-elastic-ltr",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "editor",
+  "runServices": ["es815", "es-o19s"],
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "/bin/sh ./.devcontainer/postCreateCommand.sh",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.renderWhitespace": "all",
+        "python.defaultInterpreterPath": ".venv/bin/python",
+        "python.testing.pytestArgs": ["tests", "--capture=tee-sys", "-vv"],
+        "python.testing.pytestEnabled": true,
+        "[json][jsonc]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll": "always"
+          }
+        }
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "KevinRose.vsc-python-indent",
+        "ms-toolsai.jupyter",
+        "mhutchie.git-graph",
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client"
+      ]
+    }
+  }
+}

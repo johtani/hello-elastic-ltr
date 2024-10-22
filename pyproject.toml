@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hello-elastic-ltr"
+version = "0.1.0"
+description = ""
+authors = ["Jun Ohtani <johtani@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.12"
+elasticsearch = "^8.15.1"
+requests = "^2.32.3"
+tqdm = "^4.66.5"
+ipykernel = "^6.29.5"
+jupyter = "^1.1.1"
+xgboost = "^2.1.1"
+eland = {extras = ["scikit-learn"], version = "^8.15.4"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,82 @@
+---
+services:
+  editor:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    init: true
+    environment:
+      - TZ=Asia/Tokyo
+      - LTR_DOCKER=yes 
+    command: sleep infinity
+    volumes:
+      - .:/workspace:cached
+      - venv-hello-elastic-ltr:/workspace/.venv
+    links:
+      - es-o19s
+      - es815
+  jupyter:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    environment:
+      - TZ=Asia/Tokyo
+      - LTR_DOCKER=yes 
+    ports:
+      - 8888:8888
+    command: poetry run jupyter lab --no-browser --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.token='' --NotebookApp.password='' --NotebookApp.disable_check_xsrf=True
+    volumes:
+      - .:/workspace:cached
+      - venv-hello-elastic-ltr:/workspace/.venv
+    links:
+      - es-o19s
+      - es815
+  es815:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.3
+    container_name: elasticsearch-v8153
+    environment:
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - cluster.name=es-docker-cluster
+      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
+      - xpack.security.enabled=false
+      - http.port=9200
+      - xpack.license.self_generated.type=trial
+    ports:
+      - 9218:9200
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-815-data:/usr/share/elasticsearch/data
+  es-o19s:
+    build:
+      context: ./es-docker/
+      dockerfile: Dockerfile
+    container_name: elasticsearch-v8143
+    environment:
+      - node.name=o19s-es
+      - discovery.type=single-node
+      - cluster.name=o19s-es-cluster
+      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
+      - xpack.security.enabled=false
+      - http.port=9200
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-o19s-data:/usr/share/elasticsearch/data
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.3
+    container_name: kibana-v8153
+    ports:
+      - 5618:5601
+    environment:
+      ELASTICSEARCH_HOSTS: http://es815:9200
+
+volumes:
+  es-815-data: null
+  es-o19s-data: null
+  venv-hello-elastic-ltr: 

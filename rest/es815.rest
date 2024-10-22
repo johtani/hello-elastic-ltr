@@ -1,0 +1,14 @@
+@HOST = http://es815:9200
+
+### cluster info
+GET {{HOST}}/
+
+### cat indices
+GET {{HOST}}/_cat/indices
+
+### get sample docs
+GET {{HOST}}/movies/_search
+
+### Modelの確認
+GET {{HOST}}/_ml/trained_models/
+
