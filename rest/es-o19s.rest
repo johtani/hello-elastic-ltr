@@ -1,0 +1,19 @@
+@HOST = http://es-o19s:9200
+
+### cluster info
+GET {{HOST}}/
+
+### plugin info
+GET {{HOST}}/_cat/plugins
+
+### cat indices
+GET {{HOST}}/_cat/indices
+
+### get sample docs
+GET {{HOST}}/movies/_search
+
+### get _ltr
+GET {{HOST}}/_ltr/_featureset
+
+### get _ltr/_model
+GET {{HOST}}/_ltr/_model

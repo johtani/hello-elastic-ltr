@@ -12,3 +12,16 @@ GET {{HOST}}/movies/_search
 ### Modelの確認
 GET {{HOST}}/_ml/trained_models/
 
+###
+GET {{HOST}}/movies/_search
+Content-Type: application/json
+
+{
+    "query": {
+        "multi_match": {
+            "query": "transformers dark of the moon",
+            "fields": ["title", "overview", "actors", "director", "tags", "characters"]
+        }
+    }
+}
+
